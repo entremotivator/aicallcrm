@@ -33,7 +33,7 @@ def display_customer_info(customer_data):
     updated_notes = st.text_area("Notes", selected_notes, key="updated_notes")
     customer_data.loc[customer_data['Name'] == selected_customer, 'Notes'] = updated_notes
 
-    return selected_customer  # Return selected customer
+    return selected_customer
 
 # Streamlit app layout
 st.title("Real Estate Investment CRM")
@@ -48,9 +48,6 @@ customer_data = pd.DataFrame({
 
 investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
 
-# Initialize selected_customer
-selected_customer = ""
-
 # Sidebar for adding new customers
 st.sidebar.header("Add New Customer")
 new_customer = add_customer()
@@ -60,10 +57,10 @@ if new_customer is not None:
     st.sidebar.success("Customer added successfully!")
 
 # Main content area
-selected_customer = display_customer_info(customer_data)  # Update selected_customer
+selected_customer = display_customer_info(customer_data)
 
-# Investment Type-specific call script
-st.sidebar.header("Investment Type-specific Call Script")
+# Display Investment Type-specific call script on the main content area
+st.header("Investment Type-specific Call Script")
 
 investment_type_script_mapping = {
     'Tired Landlord': """
@@ -142,6 +139,6 @@ investment_type_script_mapping = {
 if selected_customer:
     selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
     investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-    customized_script = st.sidebar.text_area("Script", investment_script, key="customized_script")
+    st.text_area("Script", investment_script, key="customized_script")
 
 # Run the app
