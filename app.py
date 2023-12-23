@@ -46,6 +46,9 @@ customer_data = pd.DataFrame({
 
 investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
 
+# Initialize selected_customer
+selected_customer = ""
+
 # Sidebar for adding new customers
 st.sidebar.header("Add New Customer")
 new_customer = add_customer()
@@ -133,9 +136,11 @@ investment_type_script_mapping = {
     """
 }
 
-selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
-investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-customized_script = st.sidebar.text_area("Script", investment_script, key="customized_script")
+# Check if selected_customer is not empty before using it
+if selected_customer:
+    selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
+    investment_script = investment_type_script_mapping.get(selected_investment_type, "")
+    customized_script = st.sidebar.text_area("Script", investment_script, key="customized_script")
 
 # Run the app
 if __name__ == "__main__":
