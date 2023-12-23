@@ -143,5 +143,3 @@ if selected_customer:
     customized_script = st.sidebar.text_area("Script", investment_script, key="customized_script")
 
 # Run the app
-if __name__ == "__main__":
-    st.run()
