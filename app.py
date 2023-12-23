@@ -1,5 +1,13 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime
+
+# Set page configuration for a wider layout
+st.set_page_config(
+    page_title="Real Estate Investment CRM",
+    page_icon="🏠",
+    layout="wide",
+)
 
 def add_customer():
     new_name = st.sidebar.text_input("Name", key="new_name")
@@ -13,7 +21,8 @@ def add_customer():
             'Name': [new_name],
             'Phone Number': [new_phone],
             'Notes': [new_notes],
-            'Investment Type': [investment_type]
+            'Investment Type': [investment_type],
+            'Last Contacted': [datetime.now()]
         })
         return new_customer
     return None
@@ -33,7 +42,12 @@ def display_customer_info(customer_data):
     updated_notes = st.text_area("Notes", selected_notes, key="updated_notes")
     customer_data.loc[customer_data['Name'] == selected_customer, 'Notes'] = updated_notes
 
-    return selected_customer
+    return selected_customer  # Return selected customer
+
+def display_additional_features(customer_data):
+    # Additional features go here
+    st.sidebar.header("Additional Features")
+    # ...
 
 # Streamlit app layout
 st.title("Real Estate Investment CRM")
@@ -43,10 +57,14 @@ customer_data = pd.DataFrame({
     'Name': ['John Doe', 'Jane Smith', 'Bob Johnson'],
     'Phone Number': ['123-456-7890', '987-654-3210', '555-123-4567'],
     'Notes': ['Interested in buying', 'Call back next week', 'Needs more information'],
-    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition']
+    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition'],
+    'Last Contacted': [datetime.now(), datetime.now(), datetime.now()]
 })
 
 investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
+
+# Initialize selected_customer
+selected_customer = ""
 
 # Sidebar for adding new customers
 st.sidebar.header("Add New Customer")
@@ -139,6 +157,9 @@ investment_type_script_mapping = {
 if selected_customer:
     selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
     investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-    st.text_area("Script", investment_script, key="customized_script")
+    st.text_area("Script", investment_script, key="customized_script", height=300)  # Adjust height as needed
+
+# Display additional features in the sidebar
+display_additional_features(customer_data)
 
 # Run the app
