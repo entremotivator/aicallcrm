@@ -33,6 +33,8 @@ def display_customer_info(customer_data):
     updated_notes = st.text_area("Notes", selected_notes, key="updated_notes")
     customer_data.loc[customer_data['Name'] == selected_customer, 'Notes'] = updated_notes
 
+    return selected_customer  # Return selected customer
+
 # Streamlit app layout
 st.title("Real Estate Investment CRM")
 
@@ -58,7 +60,7 @@ if new_customer is not None:
     st.sidebar.success("Customer added successfully!")
 
 # Main content area
-display_customer_info(customer_data)
+selected_customer = display_customer_info(customer_data)  # Update selected_customer
 
 # Investment Type-specific call script
 st.sidebar.header("Investment Type-specific Call Script")
