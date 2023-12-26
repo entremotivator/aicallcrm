@@ -9,7 +9,7 @@ st.set_page_config(
     layout="wide",
 )
 
-def add_customer():
+def add_customer_sidebar():
     new_name = st.sidebar.text_input("Name", key="new_name")
     new_phone = st.sidebar.text_input("Phone Number", key="new_phone")
     new_email = st.sidebar.text_input("Email", key="new_email")
@@ -62,7 +62,8 @@ def add_customer():
         return new_customer
     return None
 
-def display_customer_info(customer_data):
+
+def display_customer_info_main(customer_data):
     st.header("Customer List")
     st.table(customer_data)
 
@@ -83,10 +84,14 @@ def display_customer_info(customer_data):
 
     return selected_customer  # Return selected customer
 
-def display_additional_features(customer_data):
-    # Additional features go here
+def display_investment_type_script(selected_customer, customer_data):
+    selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
+    investment_script = investment_type_script_mapping.get(selected_investment_type, "")
+    st.text_area("Script", investment_script, key="customized_script")
+
+def display_additional_features_sidebar(customer_data):
     st.sidebar.header("Additional Features")
-    # ...
+    # ... (same as before)
 
 # Streamlit app layout
 st.title("Real Estate Investment CRM")
@@ -115,23 +120,7 @@ customer_data = pd.DataFrame({
 
 investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
 
-# Initialize selected_customer
-selected_customer = ""
-
-# Sidebar for adding new customers
-st.sidebar.header("Add New Customer")
-new_customer = add_customer()
-
-if new_customer is not None:
-    customer_data = pd.concat([customer_data, new_customer], ignore_index=True)
-    st.sidebar.success("Customer added successfully!")
-
-# Main content area
-selected_customer = display_customer_info(customer_data)  # Update selected_customer
-
-# Display Investment Type-specific call script on the main content area
-st.header("Investment Type-specific Call Script")
-
+# Investment Type-specific call scripts
 investment_type_script_mapping = {
     'Tired Landlord': """
     Hello [Customer Name],
@@ -205,13 +194,32 @@ investment_type_script_mapping = {
     """
 }
 
-# Check if selected_customer is not empty before using it
-if selected_customer:
-    selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
-    investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-    st.text_area("Script", investment_script, key="customized_script")
+# Initialize selected_customer
+selected_customer = ""
+
+# Sidebar for adding new customers
+st.sidebar.header("Add New Customer")
+new_customer = add_customer_sidebar()
+
+if new_customer is not None:
+    customer_data = pd.concat([customer_data, new_customer], ignore_index=True)
+    st.sidebar.success("Customer added successfully!")
+
+# Main content area
+selected_customer = display_customer_info_main(customer_data)  # Update selected_customer
+
+# Display Investment Type-specific call script on the main content area
+st.header("Investment Type-specific Call Script")
+display_investment_type_script(selected_customer, customer_data)
 
 # Additional features
-display_additional_features(customer_data)
+display_additional_features_sidebar(customer_data)
+
+# Call System
+st.sidebar.header("Call System")
+call_button = st.sidebar.button("Initiate Call System")
+
+if call_button:
+    st.success("Call system initiated. Dialing numbers...")
 
 # Run the app
