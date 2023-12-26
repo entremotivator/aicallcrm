@@ -166,11 +166,6 @@ investment_type_script_mapping = {
     """
 }
 
-# Fill in the content for the specific investment type
-email_content = templates.get(investment_type, "Invalid Investment Type").replace("[Customer Name]", customer_name).replace("[Your Name]", your_name)
-
-print(email_content)
-
 def add_customer_sidebar():
     new_name = st.sidebar.text_input("Name", key="new_name")
     new_phone = st.sidebar.text_input("Phone Number", key="new_phone")
