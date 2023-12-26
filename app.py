@@ -100,9 +100,9 @@ def display_investment_type_script(selected_customer, customer_data):
         st.warning("Make sure to personalize it further based on the specific customer.")
     else:
         st.warning(f"No script available for the selected investment type: {selected_investment_type}")
+        st.warning(f"Available investment types: {', '.join(investment_type_script_mapping.keys())}")
 
     st.markdown("---")  # Add a horizontal line for better separation
-
 def display_additional_features_sidebar(customer_data):
     st.sidebar.header("Additional Features")
     # Additional features go here
