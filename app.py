@@ -89,8 +89,19 @@ def display_customer_info_main(customer_data):
 
 def display_investment_type_script(selected_customer, customer_data):
     selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
-    investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-    st.text_area("Script", investment_script, key="customized_script")
+    
+    st.header(f"Investment Type-specific Call Script for {selected_investment_type}")
+
+    # Check if the selected_investment_type is in the mapping
+    if selected_investment_type in investment_type_script_mapping:
+        investment_script = investment_type_script_mapping[selected_investment_type]
+        st.markdown(f"**Script:**\n\n```python\n{investment_script}\n```", unsafe_allow_html=True)
+        st.info("This script provides a customized message for the selected investment type.")
+        st.warning("Make sure to personalize it further based on the specific customer.")
+    else:
+        st.warning(f"No script available for the selected investment type: {selected_investment_type}")
+
+    st.markdown("---")  # Add a horizontal line for better separation
 
 def display_additional_features_sidebar(customer_data):
     st.sidebar.header("Additional Features")
