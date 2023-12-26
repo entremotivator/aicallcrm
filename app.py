@@ -116,7 +116,8 @@ customer_data = pd.DataFrame({
     'Company': ['ABC Corp', 'XYZ Inc', '123 Industries'],
     'Preferred Contact Method': ['Phone', 'Email', 'Phone'],
     'Notes': ['Interested in buying', 'Call back next week', 'Needs more information'],
-    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition'],
+    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
+                    'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development'],
     'Budget': [100000, 50000, 200000],
     'Preferred Location': ['City', 'Suburb', 'Rural'],
     'Follow-up Reminder': [True, False, True],
@@ -129,8 +130,10 @@ customer_data = pd.DataFrame({
     'Satisfaction Level': [8, 6, 9]
 })
 
-investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
+investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
+                    'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development']
 
+# Investment Type-specific call scripts
 # Investment Type-specific call scripts
 investment_type_script_mapping = {
     'Tired Landlord': """
@@ -199,6 +202,76 @@ investment_type_script_mapping = {
     Could we schedule a meeting to explore how you can be part of our fix and flip projects?
 
     Thank you for your time and consideration.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Residential Rental': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. With the growing demand for rental properties, we're reaching out to individuals interested in residential rental investments.
+
+    [Customized Content for Residential Rentals]
+
+    Let's discuss how you can benefit from the lucrative residential rental market.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Vacation Property': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Are you interested in investing in a vacation property for both personal enjoyment and potential income?
+
+    [Customized Content for Vacation Property Investments]
+
+    Let's explore the possibilities and find the perfect vacation property for you.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Real Estate Crowdfunding': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Real estate crowdfunding is gaining popularity as a way to invest in properties collectively.
+
+    [Customized Content for Real Estate Crowdfunding]
+
+    Would you like to learn more about this innovative investment approach?
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Wholesaling': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Wholesaling involves finding great real estate deals and passing them on to other investors for a fee.
+
+    [Customized Content for Wholesaling Opportunities]
+
+    Let's discuss how you can participate in the wholesaling process.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Real Estate Development': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Real estate development offers the opportunity to create new properties and transform communities.
+
+    [Customized Content for Real Estate Development]
+
+    Could we explore how you can get involved in exciting development projects?
+
+    Thank you for your time.
 
     Best regards,
     [Your Name]
