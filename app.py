@@ -117,23 +117,31 @@ customer_data = pd.DataFrame({
     'Preferred Contact Method': ['Phone', 'Email', 'Phone'],
     'Notes': ['Interested in buying', 'Call back next week', 'Needs more information'],
     'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
-                    'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development'],
-    'Budget': [100000, 50000, 200000],
-    'Preferred Location': ['City', 'Suburb', 'Rural'],
-    'Follow-up Reminder': [True, False, True],
-    'Follow-up Date': [datetime.now() + timedelta(days=7), None, datetime.now() + timedelta(days=5)],
-    'Lead Source': ['Website', 'Referral', 'Advertisement'],
-    'Last Interaction Date': [datetime.now() - timedelta(days=10), datetime.now() - timedelta(days=5), datetime.now() - timedelta(days=3)],
-    'Interested in Newsletter': [True, True, False],
-    'Contact Status': ['New', 'Active', 'Closed'],
-    'Preferred Contact Days': ['Monday, Wednesday, Friday', 'Tuesday, Thursday', 'Monday, Tuesday'],
-    'Satisfaction Level': [8, 6, 9]
+                        'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development'],
+    'Budget': [100000, 50000, 200000, 300000, 150000, 120000, 250000, 50000, 75000, 400000],
+    'Preferred Location': ['City', 'Suburb', 'Rural', 'Urban', 'Coastal', 'Mountainous', 'Island', 'Countryside', 'Downtown', 'Industrial'],
+    'Follow-up Reminder': [True, False, True, False, True, False, True, False, True, False],
+    'Follow-up Date': [datetime.now() + timedelta(days=7), None, datetime.now() + timedelta(days=5),
+                       datetime.now() + timedelta(days=10), None, datetime.now() + timedelta(days=3),
+                       datetime.now() + timedelta(days=8), None, datetime.now() + timedelta(days=6),
+                       None],
+    'Lead Source': ['Website', 'Referral', 'Advertisement', 'Social Media', 'Event', 'Cold Call', 'Networking', 'Online Listing', 'Direct Mail', 'Walk-in'],
+    'Last Interaction Date': [datetime.now() - timedelta(days=10), datetime.now() - timedelta(days=5), datetime.now() - timedelta(days=3),
+                              datetime.now() - timedelta(days=7), datetime.now() - timedelta(days=12), datetime.now() - timedelta(days=6),
+                              datetime.now() - timedelta(days=4), datetime.now() - timedelta(days=8), datetime.now() - timedelta(days=5),
+                              datetime.now() - timedelta(days=9)],
+    'Interested in Newsletter': [True, True, False, True, False, True, False, True, False, True],
+    'Contact Status': ['New', 'Active', 'Closed', 'New', 'Active', 'Closed', 'New', 'Active', 'Closed', 'New'],
+    'Preferred Contact Days': [['Monday', 'Wednesday', 'Friday'], ['Tuesday', 'Thursday'], ['Monday', 'Tuesday'],
+                              ['Wednesday', 'Thursday', 'Friday'], ['Monday', 'Wednesday', 'Thursday'],
+                              ['Tuesday', 'Friday'], ['Monday', 'Wednesday'], ['Tuesday', 'Thursday', 'Friday'],
+                              ['Monday', 'Tuesday', 'Thursday'], ['Wednesday', 'Thursday']],
+    'Satisfaction Level': [8, 6, 9, 7, 8, 5, 9, 6, 7, 8]
 })
 
 investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
                     'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development']
 
-# Investment Type-specific call scripts
 # Investment Type-specific call scripts
 investment_type_script_mapping = {
     'Tired Landlord': """
