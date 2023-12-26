@@ -1,3 +1,4 @@
+# Import necessary libraries
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
@@ -9,57 +10,48 @@ st.set_page_config(
     layout="wide",
 )
 
-# Sample data for investment types, revenue, and call scripts
-investment_data = pd.DataFrame({
-    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
-                        'Residential Rental', 'Vacant Land Development', 'Real Estate Crowdfunding', 'Wholesaling',
-                        'Commercial Lease'],
-    'Revenue': [150000, 80000, 200000, 300000, 120000,
-                100000, 250000, 180000, 90000, 220000],
-    'Call Script': [
-        "Hello, this is [Your Name] from XYZ Real Estate. I noticed you have a property listed for a while. Are you tired of managing it?",
-        "Hi, I'm calling about your property in foreclosure. We specialize in helping homeowners navigate these situations.",
-        "Good day! We are interested in acquiring land for development. Do you have any available properties?",
-        "Hello, this is [Your Name] from ABC Commercial Realty. We have excellent opportunities for commercial property investment.",
-        "Hi, I'm calling regarding your interest in fix and flip properties. We have some great opportunities for you.",
-        "Greetings! We specialize in residential rentals. Are you looking for a reliable tenant for your property?",
-        "Hello, we are interested in vacant land development. Do you have any land parcels available for sale?",
-        "Hi, I'm calling from Real Estate Crowdfunding. We have exciting investment opportunities. Would you like to learn more?",
-        "Good day! We are interested in wholesaling real estate. Do you have properties available for wholesale?",
-        "Hello, this is [Your Name] from Commercial Lease Solutions. We can assist you in finding the perfect commercial space."
-    ]
+# Sample data for investment types and revenue
+investment_revenue_data = pd.DataFrame({
+    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip'],
+    'Revenue': [150000, 80000, 200000, 300000, 120000]
 })
+
+# Investment type script mapping (replace with actual scripts)
+investment_type_script_mapping = {
+    'Tired Landlord': "Script for Tired Landlord",
+    'Foreclosure': "Script for Foreclosure",
+    'Land Acquisition': "Script for Land Acquisition",
+    'Commercial Property': "Script for Commercial Property",
+    'Fix and Flip': "Script for Fix and Flip"
+}
 
 # Function to add/edit investment types
 def add_edit_investment_types():
-    st.header("Manage Investment Types")
+    st.header("Add/Edit Investment Types")
 
-    # Display existing investment types, revenue, and call scripts
-    st.subheader("Existing Investment Types, Revenue, and Call Scripts")
-    st.table(investment_data)
+    # Display existing investment types and revenue
+    st.subheader("Existing Investment Types and Revenue")
+    st.table(investment_revenue_data)
 
     # Input fields for adding/editing investment types
     new_investment_type = st.text_input("New Investment Type", key="new_investment_type")
     new_revenue = st.number_input("Revenue ($)", min_value=0, key="new_revenue")
-    new_call_script = st.text_area("Call Script", key="new_call_script")
 
     add_investment_type_button = st.button("Add/Edit Investment Type")
 
     if add_investment_type_button and new_investment_type != "":
         # Check if the investment type already exists
-        if new_investment_type in investment_data['Investment Type'].values:
-            # Update the revenue and call script for the existing investment type
-            investment_data.loc[investment_data['Investment Type'] == new_investment_type, 'Revenue'] = new_revenue
-            investment_data.loc[investment_data['Investment Type'] == new_investment_type, 'Call Script'] = new_call_script
-            st.success(f"Updated information for {new_investment_type}")
+        if new_investment_type in investment_revenue_data['Investment Type'].values:
+            # Update the revenue for the existing investment type
+            investment_revenue_data.loc[investment_revenue_data['Investment Type'] == new_investment_type, 'Revenue'] = new_revenue
+            st.success(f"Updated revenue for {new_investment_type}")
         else:
             # Add a new investment type
             new_investment = pd.DataFrame({
                 'Investment Type': [new_investment_type],
-                'Revenue': [new_revenue],
-                'Call Script': [new_call_script]
+                'Revenue': [new_revenue]
             })
-            investment_data = pd.concat([investment_data, new_investment], ignore_index=True)
+            investment_revenue_data = pd.concat([investment_revenue_data, new_investment], ignore_index=True)
             st.success(f"Added new investment type: {new_investment_type}")
 
 # Streamlit app layout
@@ -87,8 +79,7 @@ customer_data = pd.DataFrame({
     'Satisfaction Level': [8, 6, 9]
 })
 
-# Add more investment types
-investment_types = list(investment_data['Investment Type'])
+investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
 
 # Initialize selected_customer
 selected_customer = ""
@@ -110,10 +101,7 @@ selected_customer = display_customer_info_main(customer_data)  # Update selected
 
 # Display Investment Type-specific call script on the main content area
 st.header("Investment Type-specific Call Script")
-selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
-selected_call_script = investment_data.loc[investment_data['Investment Type'] == selected_investment_type, 'Call Script'].values[0]
-updated_call_script = st.text_area("Call Script", selected_call_script, key="updated_call_script")
-investment_data.loc[investment_data['Investment Type'] == selected_investment_type, 'Call Script'] = updated_call_script
+display_investment_type_script(selected_customer, customer_data)
 
 # Additional features
 display_additional_features_sidebar(customer_data)
