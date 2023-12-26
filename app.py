@@ -157,31 +157,6 @@ investment_type_script_mapping = {
     """
 }
 
-# Generate example customer data
-example_customers = pd.DataFrame({
-    'Name': ['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Brown', 'Charlie Davis', 'Eva White', 'Frank Miller', 'Grace Wilson', 'Henry Turner', 'Ivy Harris'],
-    'Phone Number': ['123-456-7890', '987-654-3210', '555-123-4567', '111-222-3333', '444-555-6666', '777-888-9999', '123-987-6543', '876-543-2109', '234-567-8901', '987-654-3210'],
-    'Email': ['john@example.com', 'jane@example.com', 'bob@example.com', 'alice@example.com', 'charlie@example.com', 'eva@example.com', 'frank@example.com', 'grace@example.com', 'henry@example.com', 'ivy@example.com'],
-    'Address': ['123 Main St', '456 Oak St', '789 Pine St', '321 Elm St', '654 Maple St', '987 Cedar St', '234 Birch St', '876 Walnut St', '345 Spruce St', '678 Pine St'],
-    'Company': ['ABC Corp', 'XYZ Inc', '123 Industries', 'Best Properties', 'Premium Realty', 'Dream Homes', 'Elite Estates', 'Pro Investments', 'Global Realty', 'Smart Properties'],
-    'Preferred Contact Method': ['Phone', 'Email', 'Phone', 'Email', 'Phone', 'Email', 'Phone', 'Email', 'Phone', 'Email'],
-    'Notes': ['Interested in buying', 'Call back next week', 'Needs more information', 'Looking for a commercial property', 'Interested in fix and flip opportunities', 'Considering vacation property investments', 'Looking for wholesale opportunities', 'Interested in real estate development', 'Budget for residential rental investment', 'Exploring crowdfunding for real estate'],
-    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip', 'Vacation Property', 'Wholesaling', 'Real Estate Development', 'Residential Rental', 'Real Estate Crowdfunding'],
-    'Budget': [100000, 50000, 200000, 300000, 150000, 250000, 80000, 400000, 120000, 75000],
-    'Preferred Location': ['City', 'Suburb', 'Rural', 'City', 'Suburb', 'Vacation Destination', 'City', 'Urban', 'Suburb', 'City'],
-    'Follow-up Reminder': [True, False, True, False, True, True, False, True, False, True],
-    'Follow-up Date': [datetime.now() + timedelta(days=7), None, datetime.now() + timedelta(days=5), None, datetime.now() + timedelta(days=3), datetime.now() + timedelta(days=10), None, datetime.now() + timedelta(days=6), None, datetime.now() + timedelta(days=8)],
-    'Lead Source': ['Website', 'Referral', 'Advertisement', 'Social Media', 'Website', 'Referral', 'Advertisement', 'Social Media', 'Website', 'Referral'],
-    'Last Interaction Date': [datetime.now() - timedelta(days=10), datetime.now() - timedelta(days=5), datetime.now() - timedelta(days=3), datetime.now() - timedelta(days=7), datetime.now() - timedelta(days=4), datetime.now() - timedelta(days=2), datetime.now() - timedelta(days=8), datetime.now() - timedelta(days=6), datetime.now() - timedelta(days=9), datetime.now() - timedelta(days=1)],
-    'Interested in Newsletter': [True, True, False, True, True, False, False, True, False, True],
-    'Contact Status': ['New', 'Active', 'Closed', 'Active', 'New', 'Active', 'Closed', 'Active', 'Closed', 'New'],
-    'Preferred Contact Days': [['Monday', 'Wednesday', 'Friday'], ['Tuesday', 'Thursday'], ['Monday', 'Tuesday'], ['Wednesday', 'Thursday'], ['Monday', 'Friday'], ['Tuesday'], ['Wednesday', 'Friday'], ['Monday', 'Thursday'], ['Tuesday', 'Friday'], ['Monday']],
-    'Satisfaction Level': [8, 6, 9, 7, 8, 5, 6, 9, 4, 7]
-})
-
-# Additional fields for the sidebar
-additional_fields = ['New Field 1', 'New Field 2', 'New Field 3']
-
 def add_customer_sidebar():
     new_name = st.sidebar.text_input("Name", key="new_name")
     new_phone = st.sidebar.text_input("Phone Number", key="new_phone")
@@ -269,49 +244,59 @@ def display_investment_type_script(selected_customer, customer_data):
         st.warning("Make sure to personalize it further based on the specific customer.")
     else:
         st.warning(f"No script available for the selected investment type: {selected_investment_type}")
-        st.warning(f"Available investment types: {', '.join(investment_type_script_mapping)}")
+        st.warning(f"Available investment types: {', '.join(investment_type_script_mapping.keys())}")
 
-# Function to display additional fields in the sidebar
-def display_additional_fields_sidebar():
-    st.sidebar.subheader("Additional Fields")
-    new_field_1 = st.sidebar.text_input(additional_fields[0], key="new_field_1")
-    new_field_2 = st.sidebar.text_input(additional_fields[1], key="new_field_2")
-    new_field_3 = st.sidebar.text_input(additional_fields[2], key="new_field_3")
+    st.markdown("---")  # Add a horizontal line for better separation
 
-    return new_field_1, new_field_2, new_field_3
+def display_additional_features_sidebar(customer_data):
+    st.sidebar.header("Additional Features")
+    # Additional features go here
+    # ...
 
-# Function to update the example_customers DataFrame with new fields
-def update_example_customers(new_field_1, new_field_2, new_field_3):
-    example_customers['New Field 1'] = new_field_1
-    example_customers['New Field 2'] = new_field_2
-    example_customers['New Field 3'] = new_field_3
+# Streamlit app layout
+st.title("Real Estate Investment CRM")
 
-# Main Streamlit app
-def main():
-    st.title("Real Estate Investment CRM")
+# Initialize a DataFrame to store customer data
+customer_data = pd.DataFrame({
+    'Name': ['John Doe', 'Jane Smith', 'Bob Johnson'],
+    'Phone Number': ['123-456-7890', '987-654-3210', '555-123-4567'],
+    'Email': ['john@example.com', 'jane@example.com', 'bob@example.com'],
+    'Address': ['123 Main St', '456 Oak St', '789 Pine St'],
+    'Company': ['ABC Corp', 'XYZ Inc', '123 Industries'],
+    'Preferred Contact Method': ['Phone', 'Email', 'Phone'],
+    'Notes': ['Interested in buying', 'Call back next week', 'Needs more information'],
+    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition'],
+    'Budget': [100000, 50000, 200000],
+    'Preferred Location': ['City', 'Suburb', 'Rural'],
+    'Follow-up Reminder': [True, False, True],
+    'Follow-up Date': [datetime.now() + timedelta(days=7), None, datetime.now() + timedelta(days=5)],
+    'Lead Source': ['Website', 'Referral', 'Advertisement'],
+    'Last Interaction Date': [datetime.now() - timedelta(days=10), datetime.now() - timedelta(days=5), datetime.now() - timedelta(days=3)],
+    'Interested in Newsletter': [True, True, False],
+    'Contact Status': ['New', 'Active', 'Closed'],
+    'Preferred Contact Days': ['Monday, Wednesday, Friday', 'Tuesday, Thursday', 'Monday, Tuesday'],
+    'Satisfaction Level': [8, 6, 9]
+})
 
-    # Add new customers
-    new_customer_data = add_customer_sidebar()
+# Initialize selected_customer
+selected_customer = ""
 
-    if new_customer_data is not None:
-        example_customers = pd.concat([example_customers, new_customer_data], ignore_index=True)
+# Sidebar for adding new customers
+st.sidebar.header("Add New Customer")
+new_customer = add_customer_sidebar()
 
-    # Display customer information
-    selected_customer = display_customer_info_main(example_customers)
+if new_customer is not None:
+    customer_data = pd.concat([customer_data, new_customer], ignore_index=True)
+    st.sidebar.success("Customer added successfully!")
 
-    # Display investment type script
-    display_investment_type_script(selected_customer, example_customers)
+# Main content area
+selected_customer = display_customer_info_main(customer_data)  # Update selected_customer
 
-    # Display additional fields sidebar
-    new_field_1, new_field_2, new_field_3 = display_additional_fields_sidebar()
+# Display Investment Type-specific call script on the main content area
+st.header("Investment Type-specific Call Script")
+display_investment_type_script(selected_customer, customer_data)
 
-    # Update example_customers DataFrame with new fields
-    update_example_customers(new_field_1, new_field_2, new_field_3)
-
-    # Display the updated DataFrame with additional fields
-    st.sidebar.subheader("Updated Customer Data")
-    st.sidebar.table(example_customers)
+# Additional features
+display_additional_features_sidebar(customer_data)
 
 # Run the app
-if __name__ == "__main__":
-    main()
