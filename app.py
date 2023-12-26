@@ -166,11 +166,6 @@ investment_type_script_mapping = {
     """
 }
 
-# Example: Fill in the placeholders with actual names
-customer_name = "John Doe"
-your_name = "Your Full Name"
-investment_type = "Tired Landlord"  # Change this to the desired investment type
-
 # Fill in the content for the specific investment type
 email_content = templates.get(investment_type, "Invalid Investment Type").replace("[Customer Name]", customer_name).replace("[Your Name]", your_name)
 
