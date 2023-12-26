@@ -9,89 +9,58 @@ st.set_page_config(
     layout="wide",
 )
 
-def add_customer_sidebar():
-    new_name = st.sidebar.text_input("Name", key="new_name")
-    new_phone = st.sidebar.text_input("Phone Number", key="new_phone")
-    new_email = st.sidebar.text_input("Email", key="new_email")
-    new_address = st.sidebar.text_area("Address", key="new_address")
-    new_company = st.sidebar.text_input("Company", key="new_company")
-    preferred_contact_method = st.sidebar.radio("Preferred Contact Method", ["Phone", "Email"], key="preferred_contact_method")
-    new_notes = st.sidebar.text_area("Notes", key="new_notes")
-    investment_type = st.sidebar.selectbox("Investment Type", investment_types, key="investment_type")
-    budget = st.sidebar.number_input("Budget ($)", min_value=0, key="budget")
-    preferred_location = st.sidebar.text_input("Preferred Location", key="preferred_location")
-    follow_up_reminder = st.sidebar.checkbox("Set Follow-up Reminder", key="follow_up_reminder")
+# Sample data for investment types, revenue, and call scripts
+investment_data = pd.DataFrame({
+    'Investment Type': ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
+                        'Residential Rental', 'Vacant Land Development', 'Real Estate Crowdfunding', 'Wholesaling',
+                        'Commercial Lease'],
+    'Revenue': [150000, 80000, 200000, 300000, 120000,
+                100000, 250000, 180000, 90000, 220000],
+    'Call Script': [
+        "Hello, this is [Your Name] from XYZ Real Estate. I noticed you have a property listed for a while. Are you tired of managing it?",
+        "Hi, I'm calling about your property in foreclosure. We specialize in helping homeowners navigate these situations.",
+        "Good day! We are interested in acquiring land for development. Do you have any available properties?",
+        "Hello, this is [Your Name] from ABC Commercial Realty. We have excellent opportunities for commercial property investment.",
+        "Hi, I'm calling regarding your interest in fix and flip properties. We have some great opportunities for you.",
+        "Greetings! We specialize in residential rentals. Are you looking for a reliable tenant for your property?",
+        "Hello, we are interested in vacant land development. Do you have any land parcels available for sale?",
+        "Hi, I'm calling from Real Estate Crowdfunding. We have exciting investment opportunities. Would you like to learn more?",
+        "Good day! We are interested in wholesaling real estate. Do you have properties available for wholesale?",
+        "Hello, this is [Your Name] from Commercial Lease Solutions. We can assist you in finding the perfect commercial space."
+    ]
+})
 
-    if follow_up_reminder:
-        follow_up_date = st.sidebar.date_input("Follow-up Date", datetime.now() + timedelta(days=7), key="follow_up_date")
-    else:
-        follow_up_date = None
+# Function to add/edit investment types
+def add_edit_investment_types():
+    st.header("Manage Investment Types")
 
-    lead_source = st.sidebar.text_input("Lead Source", key="lead_source")
-    last_interaction_date = st.sidebar.date_input("Last Interaction Date", key="last_interaction_date")
-    interested_in_newsletter = st.sidebar.checkbox("Interested in Newsletter", key="interested_in_newsletter")
+    # Display existing investment types, revenue, and call scripts
+    st.subheader("Existing Investment Types, Revenue, and Call Scripts")
+    st.table(investment_data)
 
-    # Additional Fields
-    contact_status = st.sidebar.selectbox("Contact Status", ["New", "Active", "Closed"], key="contact_status")
-    preferred_contact_days = st.sidebar.multiselect("Preferred Contact Days", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], key="preferred_contact_days")
-    satisfaction_level = st.sidebar.slider("Satisfaction Level", min_value=0, max_value=10, step=1, key="satisfaction_level")
+    # Input fields for adding/editing investment types
+    new_investment_type = st.text_input("New Investment Type", key="new_investment_type")
+    new_revenue = st.number_input("Revenue ($)", min_value=0, key="new_revenue")
+    new_call_script = st.text_area("Call Script", key="new_call_script")
 
-    add_customer_button = st.sidebar.button("Add Customer")
+    add_investment_type_button = st.button("Add/Edit Investment Type")
 
-    if add_customer_button and new_name != "" and new_phone != "":
-        new_customer = pd.DataFrame({
-            'Name': [new_name],
-            'Phone Number': [new_phone],
-            'Email': [new_email],
-            'Address': [new_address],
-            'Company': [new_company],
-            'Preferred Contact Method': [preferred_contact_method],
-            'Notes': [new_notes],
-            'Investment Type': [investment_type],
-            'Budget': [budget],
-            'Preferred Location': [preferred_location],
-            'Follow-up Reminder': [follow_up_reminder],
-            'Follow-up Date': [follow_up_date],
-            'Lead Source': [lead_source],
-            'Last Interaction Date': [last_interaction_date],
-            'Interested in Newsletter': [interested_in_newsletter],
-            'Contact Status': [contact_status],
-            'Preferred Contact Days': [", ".join(preferred_contact_days)],
-            'Satisfaction Level': [satisfaction_level]
-        })
-        return new_customer
-    return None
-
-def display_customer_info_main(customer_data):
-    st.header("Customer List")
-    st.table(customer_data)
-
-    selected_customer = st.selectbox("Select a customer to call", customer_data['Name'])
-    call_button = st.button("Call")
-
-    if call_button:
-        st.success(f"Calling {selected_customer} at {customer_data.loc[customer_data['Name'] == selected_customer, 'Phone Number'].values[0]}")
-
-    st.header("Customer Details")
-    selected_customer_data = customer_data.loc[customer_data['Name'] == selected_customer]
-    st.write(selected_customer_data)
-
-    st.header("Notes")
-    selected_notes = customer_data.loc[customer_data['Name'] == selected_customer, 'Notes'].values[0]
-    updated_notes = st.text_area("Notes", selected_notes, key="updated_notes")
-    customer_data.loc[customer_data['Name'] == selected_customer, 'Notes'] = updated_notes
-
-    return selected_customer  # Return selected customer
-
-def display_investment_type_script(selected_customer, customer_data):
-    selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
-    investment_script = investment_type_script_mapping.get(selected_investment_type, "")
-    st.text_area("Script", investment_script, key="customized_script")
-
-def display_additional_features_sidebar(customer_data):
-    st.sidebar.header("Additional Features")
-    # Additional features go here
-    # ...
+    if add_investment_type_button and new_investment_type != "":
+        # Check if the investment type already exists
+        if new_investment_type in investment_data['Investment Type'].values:
+            # Update the revenue and call script for the existing investment type
+            investment_data.loc[investment_data['Investment Type'] == new_investment_type, 'Revenue'] = new_revenue
+            investment_data.loc[investment_data['Investment Type'] == new_investment_type, 'Call Script'] = new_call_script
+            st.success(f"Updated information for {new_investment_type}")
+        else:
+            # Add a new investment type
+            new_investment = pd.DataFrame({
+                'Investment Type': [new_investment_type],
+                'Revenue': [new_revenue],
+                'Call Script': [new_call_script]
+            })
+            investment_data = pd.concat([investment_data, new_investment], ignore_index=True)
+            st.success(f"Added new investment type: {new_investment_type}")
 
 # Streamlit app layout
 st.title("Real Estate Investment CRM")
@@ -118,7 +87,8 @@ customer_data = pd.DataFrame({
     'Satisfaction Level': [8, 6, 9]
 })
 
-investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip']
+# Add more investment types
+investment_types = list(investment_data['Investment Type'])
 
 # Initialize selected_customer
 selected_customer = ""
@@ -131,12 +101,19 @@ if new_customer is not None:
     customer_data = pd.concat([customer_data, new_customer], ignore_index=True)
     st.sidebar.success("Customer added successfully!")
 
+# Sidebar for adding/editing investment types
+st.sidebar.header("Manage Investment Types")
+add_edit_investment_types()
+
 # Main content area
 selected_customer = display_customer_info_main(customer_data)  # Update selected_customer
 
 # Display Investment Type-specific call script on the main content area
 st.header("Investment Type-specific Call Script")
-display_investment_type_script(selected_customer, customer_data)
+selected_investment_type = customer_data.loc[customer_data['Name'] == selected_customer, 'Investment Type'].values[0]
+selected_call_script = investment_data.loc[investment_data['Investment Type'] == selected_investment_type, 'Call Script'].values[0]
+updated_call_script = st.text_area("Call Script", selected_call_script, key="updated_call_script")
+investment_data.loc[investment_data['Investment Type'] == selected_investment_type, 'Call Script'] = updated_call_script
 
 # Additional features
 display_additional_features_sidebar(customer_data)
