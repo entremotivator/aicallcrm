@@ -2,6 +2,10 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
 
+# Define investment_types before using it in the add_customer_sidebar function
+investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
+                    'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development']
+
 # Set page configuration for a wider layout
 st.set_page_config(
     page_title="Real Estate Investment CRM",
