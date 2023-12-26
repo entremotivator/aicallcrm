@@ -137,6 +137,151 @@ selected_customer = display_customer_info_main(customer_data)  # Update selected
 # Display Investment Type-specific call script on the main content area
 st.header("Investment Type-specific Call Script")
 display_investment_type_script(selected_customer, customer_data)
+investment_type_script_mapping = {
+    'Tired Landlord': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. I understand that being a landlord can be demanding, and I'm reaching out because we specialize in helping tired landlords like yourself.
+
+    [Customized Content for Tired Landlords]
+
+    Could we schedule a brief meeting to discuss your specific situation?
+
+    Thank you for considering us as a partner in your real estate journey.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Foreclosure': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. I hope this call finds you well despite the challenging circumstances.
+
+    [Customized Content for Foreclosure Opportunities]
+
+    Are you open to exploring investment opportunities related to foreclosures? I'd love to hear your thoughts.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Land Acquisition': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. We are currently looking for strategic partners interested in land acquisition opportunities.
+
+    [Customized Content for Land Acquisition]
+
+    Could we schedule a meeting to explore potential opportunities in land acquisition?
+
+    Thank you for your time and consideration.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Commercial Property': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Our team is actively involved in commercial real estate ventures, and we are reaching out to potential partners like you.
+
+    [Customized Content for Commercial Property]
+
+    Would you be interested in discussing commercial property investment opportunities further?
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Fix and Flip': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. We specialize in fix and flip projects and are looking for individuals interested in participating in these exciting ventures.
+
+    [Customized Content for Fix and Flip]
+
+    Could we schedule a meeting to explore how you can be part of our fix and flip projects?
+
+    Thank you for your time and consideration.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Residential Rental': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. With the growing demand for rental properties, we're reaching out to individuals interested in residential rental investments.
+
+    [Customized Content for Residential Rentals]
+
+    Let's discuss how you can benefit from the lucrative residential rental market.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Vacation Property': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Are you interested in investing in a vacation property for both personal enjoyment and potential income?
+
+    [Customized Content for Vacation Property Investments]
+
+    Let's explore the possibilities and find the perfect vacation property for you.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Real Estate Crowdfunding': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Real estate crowdfunding is gaining popularity as a way to invest in properties collectively.
+
+    [Customized Content for Real Estate Crowdfunding]
+
+    Would you like to learn more about this innovative investment approach?
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Wholesaling': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Wholesaling involves finding great real estate deals and passing them on to other investors for a fee.
+
+    [Customized Content for Wholesaling Opportunities]
+
+    Let's discuss how you can participate in the wholesaling process.
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """,
+    'Real Estate Development': """
+    Hello [Customer Name],
+
+    This is [Your Name] from XYZ Real Estate. Real estate development offers the opportunity to create new properties and transform communities.
+
+    [Customized Content for Real Estate Development]
+
+    Could we explore how you can get involved in exciting development projects?
+
+    Thank you for your time.
+
+    Best regards,
+    [Your Name]
+    """
+}
+
+investment_types = ['Tired Landlord', 'Foreclosure', 'Land Acquisition', 'Commercial Property', 'Fix and Flip',
+                    'Residential Rental', 'Vacation Property', 'Real Estate Crowdfunding', 'Wholesaling', 'Real Estate Development']
 
 # Additional features
 display_additional_features_sidebar(customer_data)
